@@ -1,0 +1,4 @@
+# 完整插件的组合入口；身份、会话、模型和审批继续由 DSH 提供。
+- insert:
+    - id: dsh-lfaa
+      name: dsh-lfaa

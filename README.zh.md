@@ -1,0 +1,62 @@
+# dsh-lfaa
+
+[English](README.md) | 中文
+
+**dsh-lfaa 是一个完整的 DSH 原生插件项目，拥有自己的业务模块。外观、布局、弹窗、卡片和动效是其中一组能力，不是整个项目的类型。**
+
+项目从头设计，围绕 DSH 原生工作台，不参考或迁移旧 LFAA。DSH 是唯一主 Harness，统一提供账号、AI、会话、模型、子 Agent、工具调度与操作审批；本项目通过公开接口贡献自己的业务和呈现。业务需要存储时保存在本地，并以可信 Host 身份隔离，不复制 AI 历史或维护另一套登录。
+
+## 项目结构
+
+```text
+packages/
+  dsh-lfaa/              插件装配与发行清单
+  dsh-lfaa-workspace/    左侧菜单、中间工作区/会话Tab、右侧面板、设置中心
+  dsh-lfaa-appearance/   外观配置与可撤销主题/动效投影
+scripts/                 构建与结构检查
+tests/                   定向回归
+docs/                    中英文架构、扩展合同与验证
+dist/                    仅生成产物，受忽略
+```
+
+包目录和 package.json 名称统一使用 dsh- 前缀。实现包在构建时合并进一个可安装的 dsh-lfaa，不要求用户安装开发工作区。规则见 [AGENTS.zh.md](AGENTS.zh.md)，[开发规范](开发规范.md)，文档入口见 [docs](docs/README.zh.md)。
+
+## 原生区域
+
+| 区域 | 插件贡献 |
+|---|---|
+| 左侧菜单 | `dsh-lfaa 工作区` 入口，沿宿主导航选择自己的 main 面板。 |
+| 中间工作区 | 插件当前业务的操作区；第一组实际控制为界面体验与明确标注的视觉预览。 |
+| 中间 Tab | 在会话/轨迹旁贡献 dsh-lfaa Session 工作区，保留 DSH 原会话与轨迹；不另存消息。 |
+| 右侧菜单 | 注册自己的 tab 类型及面板，关联所属 DSH Session，显示当前偏好与辅助入口。 |
+| 设置中心 | 注册 dsh-lfaa 设置分区，和工作页共享同一 ConfigForm。 |
+
+这些是插件的原生接入基础，不代表完整业务已经完成。当前没有定义或加入游戏、写作等其他业务。接口与状态见[架构](docs/architecture.zh.md)和[扩展协议](docs/extension-points.zh.md)，实际检查见[验证记录](docs/validation.zh.md)。
+
+## 开发
+
+Node.js 版本由 package.json 声明。安装开发依赖时不要自动装入第二份宿主 peer：
+
+```powershell
+npm install --legacy-peer-deps --ignore-scripts
+npm run build
+npm test
+npm run check
+```
+
+构建只输出根 dist/packages/dsh-lfaa；Host 与 Browser 入口分离，浏览器通过 DSH 的 ModuleLoader 登记并使用宿主共享 React/原语。发行清单移除已内联的私有包依赖，白名单排除参考源码、测试环境和真实数据。当前 private，不发布 npm。
+
+安装到一个明确的 DSH Profile 使用官方 `dsh plugin --profile <name> add <本项目的dist/packages/dsh-lfaa目录>`，不能安装工作区根或未构建源码包。安装、启用、停用及宿主兼容的真实验证状态以验证记录为准，不使用版本豁免冒充兼容。
+
+## 设置
+
+Host entry ID 为 `dsh-lfaa`。DSH Config schema 验证并持久化 Profile 级设置，工作区/会话 Tab/右栏/设置分区经同一 ConfigForms 读取：
+
+| 配置 | 默认值 | 消费 |
+|---|---|---|
+| enabled | true | 关闭时撤销体验层，恢复宿主下层主题。 |
+| preset | native | native 保留 DSH；soft/crisp 调整实际消费共享令牌的卡片/弹窗圆角、浮层与阴影。 |
+| density | comfortable | 本插件工作区留白与控制密度；不伪称修改整个 DSH 的布局几何。 |
+| motion | system | 跟随系统或主动减少效果；系统减少动态效果优先，监听可撤销。 |
+
+默认不改宿主颜色、字体、字号或主题选择。只读或设置不可用时不允许写入；配置拒绝/失败显示真实结果。外观方案不意味着所有 DSH 弹窗或卡片都支持替换；覆盖范围由实际公共令牌/插槽决定。

@@ -1,0 +1,9 @@
+{
+  "name": "dsh-lfaa-appearance",
+  "version": "0.1.0-dev.1",
+  "private": true,
+  "type": "module",
+  "description": "Appearance settings schema and reversible DSH theme projection",
+  "exports": { ".": "./src/index.mjs", "./config": "./src/config.mjs" },
+  "peerDependencies": { "@deepseek-ai/schemastery": "3.18.5-alpha.1" }
+}
