@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import { Modal } from '@deepseek-ai/dsh-client-ui-primitives';
+import { WritingWorkspace } from './writing.tsx';
 
 export function PluginIcon({ size = 18 }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" strokeWidth="1.5"/><path d="M9 4v16M9 10h11" stroke="currentColor" strokeWidth="1.5"/></svg>;
@@ -41,13 +42,25 @@ export function AppearanceControls(props) {
 export function Workspace(props) {
   const { t } = props;
   const config = props.usePluginConfig().value;
+  const sessionList = props.useSessions(state => state);
+  const writingAccount = useSyncExternalStore(props.subscribeWritingAccount, props.getWritingAccount, props.getWritingAccount);
   const [dialog, setDialog] = useState(false);
+  const [page, setPage] = useState('writing');
   return <section className="lfaa-panel" data-density={config?.density ?? 'comfortable'}>
-    <header className="lfaa-topbar"><div className="lfaa-brand"><PluginIcon/><span>{t('name')}</span><span className="lfaa-separator">/</span><span>{t('eyebrow')}</span></div><button className="lfaa-quiet-button" onClick={props.returnToChat}>{t('returnChat')}<span aria-hidden="true">↗</span></button></header>
-    <div className="lfaa-page"><div className="lfaa-intro"><span className="lfaa-kicker">{t('eyebrow')}</span><h1>{props.sessionId ? t('linkedSession') : t('title')}</h1><p>{props.sessionId ? t('linkedHint') : t('description')}</p><div className="lfaa-actions"><button className="lfaa-primary-button" onClick={() => setDialog(true)}>{t('preview')}<span aria-hidden="true">↗</span></button>{props.sessionId && <button className="lfaa-secondary-button" onClick={props.openInspector}>{t('inspector')}</button>}</div></div>
-      <MinecraftManager {...props}/>
-      <div className="lfaa-work-grid"><div><AppearanceControls {...props}/></div><aside className="lfaa-preview-column"><Preview t={t}/><h3>{t('cardTitle')}</h3><p>{t('cardDescription')}</p></aside></div>
-      {props.sessionId ? <details className="lfaa-session-meta"><summary>{t('sessionId')}</summary><code>{props.sessionId}</code></details> : <p className="lfaa-footnote">{t('noSession')}</p>}
+    <header className="lfaa-topbar"><div className="lfaa-brand"><PluginIcon/><span>{t('name')}</span><span className="lfaa-separator">/</span><span>{t('eyebrow')}</span></div><nav className="lfaa-workspace-tabs" aria-label={t('workspaceSections')}>
+      <button type="button" aria-current={page === 'writing' ? 'page' : undefined} onClick={() => setPage('writing')}>{t('writingNav')}</button>
+      <button type="button" aria-current={page === 'minecraft' ? 'page' : undefined} onClick={() => setPage('minecraft')}>{t('minecraftTitle')}</button>
+      <button type="button" aria-current={page === 'appearance' ? 'page' : undefined} onClick={() => setPage('appearance')}>{t('appearance')}</button>
+    </nav><button className="lfaa-quiet-button" onClick={props.returnToChat}>{t('returnChat')}<span aria-hidden="true">↗</span></button></header>
+    <div className="lfaa-page lfaa-workspace-page">
+      {page === 'writing' && (writingAccount.status === 'ready'
+        ? <WritingWorkspace key={writingAccount.accountId} {...props} sessionList={sessionList} accountId={writingAccount.accountId}/>
+        : <div className="lfaa-writing-account-state" role="status"><h1>{t('writingTitle')}</h1><p>{t(writingAccount.status === 'loading' ? 'writingAccountLoading' : writingAccount.status === 'signed-out' ? 'writingAccountRequired' : 'writingAccountError')}</p></div>)}
+      {page === 'minecraft' && <MinecraftManager {...props} sessionList={sessionList}/>}
+      {page === 'appearance' && <div className="lfaa-appearance-page"><div className="lfaa-intro"><span className="lfaa-kicker">{t('eyebrow')}</span><h1>{props.sessionId ? t('linkedSession') : t('title')}</h1><p>{props.sessionId ? t('linkedHint') : t('description')}</p><div className="lfaa-actions"><button className="lfaa-primary-button" onClick={() => setDialog(true)}>{t('preview')}<span aria-hidden="true">↗</span></button>{props.sessionId && <button className="lfaa-secondary-button" onClick={props.openInspector}>{t('inspector')}</button>}</div></div>
+        <div className="lfaa-work-grid"><div><AppearanceControls {...props}/></div><aside className="lfaa-preview-column"><Preview t={t}/><h3>{t('cardTitle')}</h3><p>{t('cardDescription')}</p></aside></div>
+        {props.sessionId ? <details className="lfaa-session-meta"><summary>{t('sessionId')}</summary><code>{props.sessionId}</code></details> : <p className="lfaa-footnote">{t('noSession')}</p>}
+      </div>}
     </div>
     <Modal open={dialog} onClose={() => setDialog(false)} title={t('dialogTitle')} closeLabel={t('close')} description={t('dialogDescription')} className="lfaa-dialog" footer={<button className="lfaa-primary-button" onClick={() => setDialog(false)}>{t('done')}</button>}><p>{t('dialogText')}</p></Modal>
   </section>;
@@ -55,7 +68,7 @@ export function Workspace(props) {
 
 function MinecraftManager(props) {
   const { t } = props;
-  const sessionList = props.useSessions();
+  const sessionList = props.sessionList;
   const [sessionChoice, setSessionChoice] = useState('');
   const [dataRoot, setDataRoot] = useState('');
   const [distribution, setDistribution] = useState('paper');

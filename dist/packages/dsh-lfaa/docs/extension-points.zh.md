@@ -6,6 +6,7 @@
 |---|---|---|
 | 左侧菜单 | sidebar.panellist + layout.selectPanel | 保留宿主导航，插件 id 选择自己的 main 面板。 |
 | 中间工作区 | keyed main + 全局 `useSessions` hook | 全局面板列出 DSH 会话；Agent 操作前必须选择目标会话。 |
+| 小说工作区 | `remote.account` + `sessions.using`/Session events | 先验证 DSH 账号资料 ID，再打开该账号的本地 IndexedDB；润色/续写经选定 Session 执行，结果须由用户确认后应用。 |
 | 会话/轨迹 Tab | list conversation.view | 增加 dsh-lfaa Tab，身份来自框架 props；保留原历史、视图选择与轨迹的开发者设置。 |
 | 右侧菜单 | sidebarRightTabs + sidebar.right.pane.tab/title + openTab | 类型、正文和标题配套登记；属于当前上屏 Session，全局面板不等同会话面板。 |
 | 设置中心 | settings.section + ConfigForms | 工作区消费同一校验后的配置和带 revision 的保存链；不可用、只读或写入拒绝如实显示。 |

@@ -74,3 +74,75 @@
 .lfaa-success { color: var(--dsw-alias-state-success-primary); font-size: .85em; }
 .lfaa-minecraft-more { margin-top: 16px; }.lfaa-minecraft-more-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); align-items: end; gap: 10px; padding-top: 14px; }.lfaa-minecraft-more-grid label { display: flex; flex-direction: column; gap: 7px; color: var(--dsw-alias-label-secondary); font-size: .8em; }.lfaa-minecraft-more-grid input, .lfaa-minecraft-more-grid textarea { width: 100%; min-width: 0; min-height: 36px; padding: 8px 10px; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-base); border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-sm); font: inherit; resize: vertical; }.lfaa-minecraft-more-grid .lfaa-minecraft-wide { grid-column: span 2; }
 @container (max-width: 700px) { .lfaa-minecraft-grid { grid-template-columns: 1fr; }.lfaa-minecraft-options { grid-column: 1; }.lfaa-minecraft-options > div, .lfaa-minecraft-more-grid { grid-template-columns: 1fr; }.lfaa-minecraft-more-grid .lfaa-minecraft-wide { grid-column: auto; }.lfaa-minecraft { padding: 16px; } }
+
+.lfaa-workspace-tabs { display: flex; align-items: center; gap: 4px; min-width: 0; overflow-x: auto; }
+.lfaa-workspace-tabs button { min-height: 34px; padding: 6px 12px; border: 1px solid transparent; border-radius: var(--dsw-radius-sm); background: transparent; color: var(--dsw-alias-label-secondary); font: inherit; font-size: .84em; white-space: nowrap; cursor: pointer; }
+.lfaa-workspace-tabs button[aria-current="page"] { background: var(--dsw-alias-bg-layer-1); border-color: var(--dsw-alias-border-l1); color: var(--dsw-alias-label-primary); }
+.lfaa-workspace-tabs button:focus-visible, .lfaa-icon-button:focus-visible, .lfaa-writing-list button:focus-visible, .lfaa-writing-item-actions button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+.lfaa-workspace-page { width: 100%; max-width: none; height: 100%; padding: 24px 26px; }
+.lfaa-writing { display: flex; flex-direction: column; min-height: 100%; gap: 18px; }
+.lfaa-writing-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; flex: none; }
+.lfaa-writing-heading h1 { margin: 5px 0 4px; font-size: clamp(22px, 2.7cqi, 30px); font-weight: 550; line-height: 1.3; letter-spacing: -.025em; }
+.lfaa-writing-heading p, .lfaa-writing-ai-heading p { margin: 0; color: var(--dsw-alias-label-secondary); font-size: .85em; line-height: 1.55; }
+.lfaa-writing-grid { display: grid; grid-template-columns: minmax(150px,.62fr) minmax(175px,.72fr) minmax(0,2fr); gap: 12px; min-width: 0; flex: 1; align-items: stretch; }
+.lfaa-writing-pane { min-width: 0; min-height: 0; border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-panel); background: var(--dsw-alias-bg-layer-1); }
+.lfaa-novel-pane, .lfaa-chapter-pane { display: flex; flex-direction: column; max-height: 76cqh; overflow: hidden; }
+.lfaa-writing-pane-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 52px; padding: 10px 13px; border-bottom: 1px solid var(--dsw-alias-border-l1); }
+.lfaa-writing-pane-heading h2, .lfaa-writing-ai-heading h2 { margin: 0; font-size: .95em; font-weight: 550; }
+.lfaa-icon-button { flex: none; display: grid; place-items: center; min-width: 32px; min-height: 32px; padding: 0; border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-sm); background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); font: inherit; font-size: 1.2em; cursor: pointer; }
+.lfaa-icon-button:disabled { opacity: .45; cursor: not-allowed; }
+.lfaa-writing-list { display: flex; flex-direction: column; gap: 3px; margin: 0; padding: 8px; overflow-y: auto; list-style: none; }
+.lfaa-writing-list li { display: flex; align-items: center; min-width: 0; gap: 3px; }
+.lfaa-writing-item { flex: 1; min-width: 0; padding: 9px 8px; overflow: hidden; border: 1px solid transparent; border-radius: var(--dsw-radius-sm); background: transparent; color: var(--dsw-alias-label-secondary); font: inherit; font-size: .84em; text-align: start; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.lfaa-writing-item[aria-current="true"] { border-color: var(--dsw-alias-border-l1); background: var(--dsw-alias-bg-layer-2); color: var(--dsw-alias-label-primary); }
+.lfaa-writing-item-actions { display: flex; flex: none; gap: 1px; }
+.lfaa-writing-item-actions button { display: grid; place-items: center; min-width: 25px; min-height: 28px; border: 0; border-radius: 5px; background: transparent; color: var(--dsw-alias-label-secondary); font: inherit; cursor: pointer; }
+.lfaa-writing-item-actions button:hover { background: var(--dsw-alias-bg-layer-2); color: var(--dsw-alias-label-primary); }
+.lfaa-writing-item-actions button:last-child:hover { color: var(--dsw-alias-state-error-primary); }
+.lfaa-writing-empty, .lfaa-writing-state { margin: 0; padding: 14px; color: var(--dsw-alias-label-secondary); font-size: .82em; line-height: 1.6; }
+.lfaa-editor-pane { display: flex; flex-direction: column; min-height: 620px; overflow: hidden; padding: 16px; }
+.lfaa-editor-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex: none; }
+.lfaa-editor-title-label { display: flex; flex-direction: column; min-width: 0; flex: 1; gap: 5px; }
+.lfaa-editor-title-label input, .lfaa-writing-dialog-field input { width: 100%; min-width: 0; min-height: 36px; padding: 6px 8px; border: 1px solid transparent; border-radius: var(--dsw-radius-sm); outline: none; background: transparent; color: var(--dsw-alias-label-primary); font: inherit; font-size: 1.05em; font-weight: 550; }
+.lfaa-editor-title-label input:focus, .lfaa-writing-dialog-field input:focus { border-color: var(--dsw-alias-brand-primary); }
+.lfaa-save-state { flex: none; color: var(--dsw-alias-label-secondary); font-size: .74em; }
+.lfaa-save-saving, .lfaa-save-dirty { color: var(--dsw-alias-brand-primary); }
+.lfaa-save-error { color: var(--dsw-alias-state-error-primary); }
+.lfaa-manuscript { width: 100%; min-height: 240px; flex: 1 1 auto; margin: 10px 0 12px; padding: 16px; resize: vertical; border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-md); background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); font: inherit; font-size: .98em; line-height: 1.9; white-space: pre-wrap; }
+.lfaa-manuscript:focus-visible, .lfaa-writing-dialog-field input:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+.lfaa-manuscript::placeholder { color: var(--dsw-alias-label-secondary); }
+.lfaa-writing-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; flex: none; padding-bottom: 12px; color: var(--dsw-alias-label-secondary); font-size: .75em; }
+.lfaa-writing-session { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-left: auto; }
+.lfaa-writing-session select { max-width: min(240px, 40cqi); min-width: 120px; min-height: 32px; padding: 5px 8px; border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-sm); background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); font: inherit; }
+.lfaa-writing-footer > .lfaa-secondary-button { min-height: 32px; padding: 5px 8px; font-size: .92em; }
+.lfaa-writing-ai { flex: none; min-width: 0; padding: 12px; border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-md); background: var(--dsw-alias-bg-base); }
+.lfaa-writing-ai-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.lfaa-writing-ai-heading p { margin-top: 4px; }
+.lfaa-writing-ai-actions { display: flex; flex-wrap: wrap; gap: 7px; }
+.lfaa-writing-ai-actions button, .lfaa-writing-suggestion > button { min-height: 34px; padding: 6px 10px; font-size: .82em; }
+.lfaa-writing-ai-actions button:disabled { opacity: .5; cursor: not-allowed; }
+.lfaa-writing-suggestion { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--dsw-alias-border-l1); }
+.lfaa-writing-suggestion-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: .82em; }
+.lfaa-writing-suggestion pre { max-height: 300px; overflow: auto; margin: 0; padding: 10px; border-radius: var(--dsw-radius-sm); background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-primary); font: inherit; font-size: .86em; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.lfaa-writing-suggestion .lfaa-quiet-button { align-self: flex-start; min-height: 28px; }
+.lfaa-writing-blank { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 300px; margin: auto; padding: 28px; }
+.lfaa-writing-blank h2 { margin: 0; font-size: 1.25em; }
+.lfaa-writing-blank p { color: var(--dsw-alias-label-secondary); line-height: 1.6; }
+.lfaa-danger-button { min-height: 36px; padding: 8px 14px; border: 1px solid var(--dsw-alias-state-error-primary); border-radius: var(--dsw-radius-sm); background: transparent; color: var(--dsw-alias-state-error-primary); font: inherit; cursor: pointer; }
+.lfaa-writing-dialog { max-height: min(82dvh, 640px); overflow-y: auto !important; }
+.lfaa-writing-dialog-field { display: flex; flex-direction: column; gap: 7px; min-width: min(320px, 70vw); color: var(--dsw-alias-label-secondary); font-size: .85em; }
+.lfaa-writing-dialog-field input { border-color: var(--dsw-alias-border-l1); background: var(--dsw-alias-bg-base); font-size: 1em; font-weight: 400; }
+.lfaa-appearance-page { max-width: 1120px; margin-inline: auto; }
+.lfaa-writing-account-state { display: flex; flex-direction: column; justify-content: center; min-height: min(420px, 60vh); max-width: 620px; margin: 0 auto; padding: 28px; text-align: center; }
+.lfaa-writing-account-state h1 { margin: 0; font-size: clamp(22px, 2.7cqi, 30px); font-weight: 550; }
+.lfaa-writing-account-state p { color: var(--dsw-alias-label-secondary); line-height: 1.7; }
+[data-density="compact"] .lfaa-writing { gap: 12px; }
+[data-density="compact"] .lfaa-writing-grid { gap: 8px; }
+[data-density="compact"] .lfaa-writing-pane-heading { min-height: 44px; padding-block: 6px; }
+[data-density="compact"] .lfaa-writing-list { padding: 5px; }
+[data-density="compact"] .lfaa-writing-item { padding-block: 6px; }
+[data-density="compact"] .lfaa-editor-pane { padding: 11px; }
+[data-density="compact"] .lfaa-manuscript { padding: 11px; line-height: 1.7; }
+@container (max-width: 1050px) { .lfaa-writing-grid { grid-template-columns: minmax(140px,.7fr) minmax(0,2fr); }.lfaa-chapter-pane { grid-column: 1; grid-row: 2; max-height: 280px; }.lfaa-novel-pane { grid-column: 1; grid-row: 1; max-height: 240px; }.lfaa-editor-pane { grid-column: 2; grid-row: 1 / span 2; } }
+@container (max-width: 680px) { .lfaa-topbar { flex-wrap: wrap; justify-content: flex-start; padding: 8px 14px; }.lfaa-workspace-tabs { order: 3; width: 100%; }.lfaa-topbar > .lfaa-quiet-button { margin-left: auto; }.lfaa-workspace-page { padding: 18px 14px; }.lfaa-writing-grid { grid-template-columns: minmax(0,1fr); }.lfaa-novel-pane, .lfaa-chapter-pane, .lfaa-editor-pane { grid-column: 1; grid-row: auto; }.lfaa-novel-pane, .lfaa-chapter-pane { max-height: 180px; }.lfaa-editor-pane { min-height: 600px; padding: 12px; }.lfaa-writing-footer { align-items: flex-start; }.lfaa-writing-session { margin-left: 0; }.lfaa-writing-session select { max-width: 62cqi; }.lfaa-writing-heading { gap: 8px; } }
+@media (max-height: 560px) { .lfaa-editor-pane { min-height: 520px; }.lfaa-novel-pane, .lfaa-chapter-pane { max-height: 180px; }.lfaa-writing-dialog { max-height: 88dvh; } }

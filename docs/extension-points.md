@@ -6,6 +6,7 @@ English | [中文](extension-points.zh.md)
 |---|---|---|
 | Left navigation | sidebar.panellist + layout.selectPanel | Keep host navigation; the plugin id selects its own registered main panel. |
 | Central workspace | keyed main + global `useSessions` hook | The global panel lists DSH conversations and requires a selected target for Agent operations. |
+| Novel workspace | `remote.account` + `sessions.using`/Session events | Verify the current DSH account profile ID before opening its local IndexedDB; route polish/continuation through the selected Session and apply returned text only after user action. |
 | Conversation/Trajectory tabs | list conversation.view | Add dsh-lfaa beside native tabs. Session identity comes from framework props; preserve native history, view selection and developer-mode policy. |
 | Right pane | sidebarRightTabs + sidebar.right.pane.tab/title + openTab | Register type and body/title together; the current on-screen Session owns the pane. Global panels are not Session surfaces. |
 | Settings | settings.section + ConfigForms | Share the same accepted schema and revision-fenced persistence with the workspace. Handle unavailable/read-only/refused writes truthfully. |

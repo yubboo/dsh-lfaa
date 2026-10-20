@@ -7,7 +7,7 @@
 | 包 | 唯一职责 | 运行位置与依赖 |
 |---|---|---|
 | dsh-lfaa | 对外清单、Bundle、Host 装配与配置导出 | Host；构建内联实现包，不复制业务规则。 |
-| dsh-lfaa-workspace | 左侧导航、可选择 DSH 会话的中间主面板、会话Tab、Minecraft 操作、右侧辅助栏、设置页、文案与局部样式 | Browser；依赖宿主 Slots/Locale/Layout/ConfigForms/Sidebar/Session hooks、共享 React/原语与 appearance。 |
+| dsh-lfaa-workspace | 左侧导航、三栏小说/章节编辑器、可选择 DSH 会话的中间主面板、会话Tab、Minecraft 操作、右侧辅助栏、设置页、文案与局部样式 | Browser；依赖宿主 Slots/Locale/Layout/ConfigForms/Sidebar/Session hooks 与账号 Remote、共享 React/原语与 appearance。写作数据存入按 DSH 可信账号 ID 分区的本地 IndexedDB。 |
 | dsh-lfaa-appearance | 唯一配置 schema 与可撤销的主题/动效投影 | Host schema 与隔离的浏览器投影；不拥有导航、AI 或数据库。 |
 | dsh-lfaa-minecraft | Paper/Fabric 动态目录、Fabric 模组发现、实例元数据、校验安装、Java 运行时与服务端进程生命周期 | Host；使用 `ctx.fs`、`ctx.subprocess` 与 `minecraft_server` Agent 工具。工作区通过选定的 DSH 会话提交请求，不另建 Remote 执行通道。 |
 
@@ -45,7 +45,7 @@ DSH 统一掌管全部 AI、模型、Agent/子 Agent、工具调度、会话和 
 
 Config 定义于 packages/dsh-lfaa-appearance/src/config.mjs，由 dsh-lfaa Host 导出，默认 enabled=true、preset=native、density=comfortable、motion=system。服务端 schema 验证并由 DSH Settings 保存到当前 Profile，Client 从 ConfigForms 读取；来源未 ready 或只读时禁用写入，失败/拒绝不伪装成功。
 
-这些是 Profile 级体验配置，不等于按账号的业务数据。业务开始需要持久化时，使用 Host 确认的真实账号命名空间；不把 Profile、Session 或匿名遥测 ID 当作账户。切号、撤销身份、在途操作和旧缓存必须随业务验收。插件安装不自动复制任何用户数据。
+这些是 Profile 级体验配置，不等于按账号的业务数据。小说和章节以 DSH 账号 Remote 返回的可信账号资料 ID 命名 IndexedDB 数据库，并按该 ID 隔离。账号流变化时，活动编辑器卸载并清空；数据只保存在当前浏览器配置，不跨设备或 DSH 主机同步。Profile、Session 或匿名遥测 ID 不冒充账号。插件安装不自动复制任何用户数据。
 
 ## 上游兼容基线
 

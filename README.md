@@ -6,12 +6,14 @@ A complete native DSH plugin project with independently owned business modules. 
 
 DSH owns accounts, all AI execution, sessions, models, subagents, tool dispatch and approval. The plugin contributes its own business through public interfaces and keeps business data local when needed. No second harness, login or conversation store is introduced.
 
+The three-column writing workspace manages novel projects and chapters, autosaves the selected chapter, and sends AI polish/continuation prompts through a selected DSH conversation. Results appear as suggestions and are applied only after a user action. Writing data is stored locally under the verified DSH account profile ID.
+
 ## Repository
 
 ```text
 packages/
   dsh-lfaa/              Plugin composition and distribution manifest
-  dsh-lfaa-workspace/    Left menu, main workspace, Session tab, right pane, Settings
+  dsh-lfaa-workspace/    Novel workspace, editor, Session tab, right pane, Settings
   dsh-lfaa-appearance/   Appearance schema and reversible theme/motion projection
   dsh-lfaa-minecraft/    Host-side Paper/Fabric instances, lifecycle, and Modrinth Fabric mods
 scripts/                 Build and repository checks

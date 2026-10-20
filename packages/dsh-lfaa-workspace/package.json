@@ -13,12 +13,13 @@
   "peerDependencies": {
     "react": "^18.3.1",
     "@deepseek-ai/dsh-client-ui-primitives": "0.2.1-rc.2",
-    "@deepseek-ai/dsh-client-ui-session": "0.2.1-rc.2"
+    "@deepseek-ai/dsh-client-ui-session": "0.2.1-rc.2",
+    "@deepseek-ai/dsh-api-remotes": "0.2.1-rc.2"
   },
   "dsh": {
     "client": {
       "platform": "web",
-      "inject": ["@deepseek-ai/dsh-client-ui-session"]
+      "inject": ["@deepseek-ai/dsh-client-ui-session", "@deepseek-ai/dsh-api-remotes"]
     }
   }
 }
