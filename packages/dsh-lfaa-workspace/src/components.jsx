@@ -1,4 +1,4 @@
-import { useState, useSyncExternalStore } from 'react';
+import { Component, useState, useSyncExternalStore } from 'react';
 import { Modal } from '@deepseek-ai/dsh-client-ui-primitives';
 import { WritingWorkspace } from './writing.tsx';
 
@@ -39,7 +39,26 @@ export function AppearanceControls(props) {
   </div>;
 }
 
+class SurfaceErrorBoundary extends Component {
+  state = { error: undefined };
+
+  static getDerivedStateFromError(error) { return { error }; }
+
+  render() {
+    if (this.state.error) return <section className="lfaa-render-error" role="alert">
+      <h2>{this.props.t('renderErrorTitle')}</h2>
+      <p>{this.props.t('renderErrorHint')}</p>
+      <pre>{String(this.state.error?.message ?? this.state.error).slice(0, 4000)}</pre>
+    </section>;
+    return this.props.children;
+  }
+}
+
 export function Workspace(props) {
+  return <SurfaceErrorBoundary t={props.t}><WorkspaceContent {...props}/></SurfaceErrorBoundary>;
+}
+
+function WorkspaceContent(props) {
   const { t } = props;
   const config = props.usePluginConfig().value;
   const sessionList = props.useSessions(state => state);
@@ -192,7 +211,7 @@ function MinecraftManager(props) {
 }
 
 export function SettingsSection(props) {
-  return <section className="lfaa-settings-section"><AppearanceControls {...props}/></section>;
+  return <SurfaceErrorBoundary t={props.t}><section className="lfaa-settings-section"><AppearanceControls {...props}/></section></SurfaceErrorBoundary>;
 }
 
 export function Inspector(props) {

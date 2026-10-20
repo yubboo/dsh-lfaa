@@ -1,4 +1,8 @@
 .lfaa-panel, .lfaa-settings-section, .lfaa-inspector { color: var(--dsw-alias-label-primary); font: inherit; box-sizing: border-box; }
+.lfaa-render-error { box-sizing: border-box; max-width: 900px; margin: 0 auto; padding: 28px; color: var(--dsw-alias-label-primary); }
+.lfaa-render-error h2 { margin: 0 0 8px; font-size: 1.1em; }
+.lfaa-render-error p { color: var(--dsw-alias-label-secondary); }
+.lfaa-render-error pre { max-height: 50vh; overflow: auto; padding: 12px; border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-sm); background: var(--dsw-alias-bg-layer-1); white-space: pre-wrap; overflow-wrap: anywhere; }
 .lfaa-panel *, .lfaa-settings-section *, .lfaa-inspector * { box-sizing: border-box; }
 .lfaa-panel { height: 100%; min-height: 0; min-width: 0; display: flex; flex-direction: column; container-type: inline-size; background: var(--dsw-alias-bg-base); }
 .lfaa-topbar { flex: none; min-height: 58px; padding: 12px 28px; border-bottom: 1px solid var(--dsw-alias-border-l1); display: flex; gap: 14px; align-items: center; justify-content: space-between; }
