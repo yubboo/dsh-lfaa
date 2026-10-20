@@ -65,7 +65,7 @@ export function registerMinecraftTool(ctx, service) {
       properties: {
         type: 'object',
         description: 'One to twenty server.properties values. Supported keys include motd, max-players, difficulty, gamemode, pvp, online-mode, white-list, allow-flight, view-distance, simulation-distance, spawn-protection, level-name, and server-port.',
-        additionalProperties: { type: 'string' },
+        additionalProperties: true,
       },
       backupId: { type: 'string', description: 'Managed backup ID returned by backup_list.' },
     },

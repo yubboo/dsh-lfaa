@@ -11,6 +11,8 @@ English | [中文](extension-points.zh.md)
 | Settings | settings.section + ConfigForms | Share the same accepted schema and revision-fenced persistence with the workspace. Handle unavailable/read-only/refused writes truthfully. |
 | Minecraft Host domain | `ctx.lfaaMinecraft`, provided by dsh-lfaa-minecraft | Owns Paper/Fabric version and build discovery, Java inspection/install, instances, EULA, lifecycle, bounded files/config, console, backups, and Fabric mods. The workspace submits requests to `minecraft_server` through the selected DSH conversation. |
 
+In DSH tool parameters, the root is an implicit open property map; each explicit nested object declares boolean `additionalProperties`. The Minecraft `server.properties` map is open at the schema boundary, while its Host domain owner enforces supported keys, string values, and request bounds.
+
 All contributions dispose. Use slots.inject to wait for declarations, and retain original props/children/store/scope contracts when shading native slots. Lower numeric shadow priority wins; identical priority collisions are errors. Do not target private DOM or hashed classes.
 
 Theme overrides use theme.overrideTokens with paired light/dark values and a stable plugin source. Default native appearance produces no layer. density changes affect only the plugin workspace. System reduced motion takes precedence, and no new animation is imposed on high-frequency keyboard actions.
