@@ -45,7 +45,7 @@ pnpm test
 pnpm run check
 ```
 
-仓库根目录现在也是 DSH 安装入口：根清单指向 dist/packages/dsh-lfaa，Git 安装时由 prepare 自动构建该产物。在 DSH「添加插件」中输入 `https://github.com/yubboo/dsh-lfaa.git` 可从 Git 安装；本地安装前先在仓库根运行 `pnpm run build`，再输入仓库根目录。构建只输出根 dist/packages/dsh-lfaa；Host 与 Browser 入口分离，浏览器通过 DSH 的 ModuleLoader 登记并使用宿主共享 React/原语。发行清单移除已内联的私有包依赖，白名单排除参考源码、测试环境和真实数据。包名 `dsh-lfaa` 需要先将构建产物发布到 npm 才能安装。Windows 下可在仓库根双击 `publish-npm.bat` 打开菜单：菜单 6 安全推送到 GitHub `main`，菜单 7 检查、构建、预览并在确认后发布 npm；菜单 1–5 提供构建、登录和版本查询。中文菜单由 `scripts/publish-menu.ps1` 显示，`.bat` 保持纯 ASCII，避免 CMD 把 UTF-8 字符误当成命令。脚本不会自动递增版本。
+仓库根目录现在也是 DSH 安装入口：根清单指向 dist/packages/dsh-lfaa，Git 安装时由 prepare 自动构建该产物。在 DSH「添加插件」中输入 `https://github.com/yubboo/dsh-lfaa.git` 可从 Git 安装；本地安装前先在仓库根运行 `pnpm run build`，再输入仓库根目录。构建只输出根 dist/packages/dsh-lfaa；Host 与 Browser 入口分离，浏览器通过 DSH 的 ModuleLoader 登记并使用宿主共享 React/原语。发行清单移除已内联的私有包依赖，白名单排除参考源码、测试环境和真实数据。包名 `dsh-lfaa` 需要先将构建产物发布到 npm 才能安装。Windows 下可在仓库根双击 `publish-npm.bat` 打开菜单：菜单 6 安全推送到 GitHub `main`，提交说明必须以递增的三段版本号开头；脚本从 GitHub 提交历史读取上次推送版本，并用本地 Git 配置作为备用。菜单 7 检查、构建、预览并在确认后发布 npm；菜单 1–5 提供构建、登录和版本查询。中文菜单由 `scripts/publish-menu.ps1` 显示，`.bat` 保持纯 ASCII，避免 CMD 把 UTF-8 字符误当成命令。脚本不会自动递增 npm 包版本。
 
 安装到一个明确的 DSH Profile 可使用官方 `dsh plugin --profile <name> add <仓库根目录或dist/packages/dsh-lfaa目录>`。本地仓库根必须先构建；GitHub 根地址会自动构建。安装、启用、停用及宿主兼容的真实验证状态以验证记录为准，不使用版本豁免冒充兼容。
 

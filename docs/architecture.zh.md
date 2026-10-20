@@ -49,8 +49,8 @@ Config 定义于 packages/dsh-lfaa-appearance/src/config.mjs，由 dsh-lfaa Host
 
 ## 上游兼容基线
 
-官方仓库：[deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)。2026-10-15 查询默认分支 master 为 [571902028a75c64c1d767f4ae5fd099485f0ddf0](https://github.com/deepseek-ai/deepseek-harness/tree/571902028a75c64c1d767f4ae5fd099485f0ddf0)，源码版本为 0.2.1-alpha.3。本机原参考副本为 alpha.2，未被更新或修改。源码提交、npm 发布物及实际安装版本分别核对，版本号相等不是完整兼容证据。
+当前支持的 DSH 包基线为官方 `dsh-v0.2.1-rc.2`（[源码标签](https://github.com/deepseek-ai/deepseek-harness/tree/dsh-v0.2.1-rc.2)，发布提交 `687f282`）。所有声明的 DSH peer 均精确锁定到 `0.2.1-rc.2`，使安装器的 peer 检查与该运行时一致。源码导出、发行包和实际运行中的安装仍需分别核对；peer 版本匹配本身不代表完整运行兼容。见[验证记录](validation.zh.md)。不 fork 上游源码，也不使用隐藏旧宿主回退。
 
-候选 peer 范围目前限定 alpha.3；真实 Loader、浏览器、设置往返、卸载恢复的结果见验证记录，未测试项不能记为通过。升级先对账公开导出、Bundle/Client 模块协议、Slots/Theme/ConfigForms 和当前 Session 生命周期，再跑直接回归及实页测试；不使用版本豁免或静默回退代替适配。
+当前 peer 版本精确限定为 `0.2.1-rc.2`；真实 Loader、浏览器、设置往返、卸载恢复的结果见验证记录，未测试项不能记为通过。升级先对账公开导出、Bundle/Client 模块协议、Slots/Theme/ConfigForms 和当前 Session 生命周期，再跑直接回归及实页测试；不使用版本豁免或静默回退代替适配。
 
 源码核查依据是上游 packages/client/{ui-layout,ui-conversation,ui-sidebar-right,ui-settings,ui-theme,ui-slots,ui-primitives,ui-session} 的公开服务/插槽合同及 docs/user/develop/basic/publish.zh.md。Minecraft 阶段三进度和限制见[阶段记录](phase-3-minecraft.zh.md)：Paper/Fabric Host 工具与工作区入口已接入；Forge/NeoForge/Quilt、模组整合包、代理服和真实开服验收尚未完成。

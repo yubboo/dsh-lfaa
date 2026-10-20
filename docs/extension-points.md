@@ -17,4 +17,4 @@ Theme overrides use theme.overrideTokens with paired light/dark values and a sta
 
 Host and Client entries build separately; browser registration uses the upstream ModuleLoader envelope and host-shared platform modules. Native Modal owns focus, keyboard and dismissal. Public tokens do not imply a universal dialog replacement factory; changes to deeper host behavior require an actual public seam and tests.
 
-Candidate runtime: DSH 0.2.1-alpha.3 with declared peers. Scope, exports, disposal, settings roundtrips and actual browser behavior must be validated against the concrete runtime before broadening compatibility. See [actual evidence](validation.md).
+Supported package baseline: DSH 0.2.1-rc.2 with exact peer versions. Scope, exports, disposal, settings roundtrips and actual browser behavior must still be validated against the installed runtime before claiming full compatibility. See [actual evidence](validation.md).
