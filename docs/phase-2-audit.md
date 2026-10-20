@@ -32,7 +32,7 @@ DSH Plugin Manager accepts registry package names, Git repository addresses, tar
 | GitHub repository URL | pnpm can reach GitHub; the root package.json declares dsh.bundle; the installed package must pass bundle validation | No |
 | Local directory | Use an absolute path; the directory has a readable package.json declaring dsh.bundle | No |
 
-The dsh-lfaa repository root manifest points its distribution entry at the root dist/packages/dsh-lfaa and declares a prepare build. Before installing the source directory locally, ensure that artifact has been built. A Git install also depends on the manifest, build script, and pnpm lifecycle policy on the actual Git branch. If the installer blocks a build script, follow DSH's install flow to handle that request. Changing the npm registry changes where registry packages and dependencies are fetched; it does not fix an unreachable GitHub host.
+The dsh-lfaa repository root manifest points its distribution entry at the root dist/packages/dsh-lfaa. GitHub installs use the committed build output and do not run a prepare script; the GitHub push menu refreshes that output before staging. A local source-directory install still requires building first. Changing the npm registry changes where registry packages and dependencies are fetched; it does not fix an unreachable GitHub host.
 
 The user previously reported that dsh-lfaa@0.1.0 installed by package name. That confirms the registry installation path is available. It does not show that GitHub and local directory installs were each tested, or that Minecraft services exist.
 
@@ -46,7 +46,7 @@ Evidence: DSH's [install-spec.ts](https://github.com/deepseek-ai/deepseek-harnes
 | [dsh-lfaa-workspace](../packages/dsh-lfaa-workspace/README.md) | Registers DSH-native navigation, main workspace, Session view, right pane, and settings; displays appearance controls and a sample preview. | Minecraft business UI and live server state. |
 | [dsh-lfaa-appearance](../packages/dsh-lfaa-appearance/README.md) | Owns the current Profile-level appearance Config schema and reversible DSH theme-token projection. | General business settings, server metadata, or game files. |
 
-The build script inlines private workspace packages into the repository-root dist/packages/dsh-lfaa and removes private dependencies from the published manifest. The root package's prepare script invokes that build. The source package directory and built distribution directory are different install targets; the local directory form uses the repository-root manifest.
+The build script inlines private workspace packages into the repository-root dist/packages/dsh-lfaa and removes private dependencies from the published manifest. The source package directory and built distribution directory are different install targets; GitHub and local directory installs use the repository-root manifest, with GitHub consuming the committed build output.
 
 Existing tests use Node's native test runner and cover package naming, appearance-token projection, and UI registration and cleanup. They do not exercise installation or activation in a real DSH Profile, or Minecraft startup and process recovery.
 

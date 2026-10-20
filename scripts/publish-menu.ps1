@@ -357,10 +357,13 @@ function Assert-StagedChangesSafe {
     $stagedPaths = @(Get-GitLines -Arguments @('diff', '--cached', '--name-only'))
     if ($stagedPaths.Count -eq 0) { return $stagedPaths }
 
-    $blockedPattern = '(^|/)(node_modules|dist|data)(/|$)|(^|/)\.env(?:\.[^/]*)?$|\.log$'
-    $blockedPaths = @($stagedPaths | Where-Object { $_ -match $blockedPattern -and $_ -notmatch '(^|/)\.env\.example$' })
+    $blockedPattern = '(^|/)(node_modules|data)(/|$)|(^|/)\.env(?:\.[^/]*)?$|\.log$'
+    $blockedPaths = @($stagedPaths | Where-Object {
+        $isUnexpectedDist = ($_ -match '(^|/)dist(/|$)' -and $_ -notmatch '^dist/packages/dsh-lfaa/')
+        ($isUnexpectedDist -or $_ -match $blockedPattern) -and $_ -notmatch '(^|/)\.env\.example$'
+    })
     if ($blockedPaths.Count -gt 0) {
-        throw "暂存区包含运行数据、构建产物或环境文件，已阻止提交：`n$($blockedPaths -join "`n")"
+        throw "暂存区包含运行数据、非发行构建产物或环境文件，已阻止提交：`n$($blockedPaths -join "`n")"
     }
 
     $indexEntries = Get-GitLines -Arguments @('ls-files', '--stage')
@@ -402,6 +405,9 @@ function Push-GitHubRepository {
     Write-Host ''
     Write-Host '【GitHub 正常推送】' -ForegroundColor Green
     Write-Host '脚本只执行普通 git push；不会强推或覆盖远端历史。' -ForegroundColor Green
+    Write-Host '正在重建 GitHub 安装所需的可安装发行目录……' -ForegroundColor Cyan
+    $pnpmPath = Get-ToolPath 'pnpm.cmd'
+    Invoke-ExternalChecked -Executable $pnpmPath -Arguments @('run', 'build')
 
     $mainExists = Assert-GitHubTarget
     $lastPushedVersion = Get-LastPushedVersion -RemoteMainExists $mainExists
@@ -451,7 +457,7 @@ function Push-GitHubRepository {
         if ($stagedPaths.Count -gt 0) {
             Write-Host '本次暂存文件：' -ForegroundColor Cyan
             (Get-GitLines -Arguments @('diff', '--cached', '--name-status', '--find-renames')) | ForEach-Object { Write-Host "  $_" }
-            Write-Host '已检查：排除运行数据/构建产物/环境文件，并扫描高风险凭据与大文件。' -ForegroundColor Green
+            Write-Host '已检查：仅包含可安装发行目录，排除运行数据/临时构建产物/环境文件，并扫描高风险凭据与大文件。' -ForegroundColor Green
             Invoke-GitChecked -Arguments @('commit', '-m', $commitMessage)
         }
         else {

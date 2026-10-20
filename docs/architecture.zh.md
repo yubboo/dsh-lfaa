@@ -11,7 +11,7 @@
 | dsh-lfaa-appearance | 唯一配置 schema 与可撤销的主题/动效投影 | Host schema 与隔离的浏览器投影；不拥有导航、AI 或数据库。 |
 | dsh-lfaa-minecraft | Paper/Fabric 动态目录、Fabric 模组发现、实例元数据、校验安装、Java 运行时与服务端进程生命周期 | Host；使用 `ctx.fs`、`ctx.subprocess` 与 `minecraft_server` Agent 工具。工作区通过选定的 DSH 会话提交请求，不另建 Remote 执行通道。 |
 
-源码目录、manifest 名称统一 dsh- 前缀，跨包使用公开包名导入。根 scripts 编排构建，tests 存长期回归；私有实现内联到 dist/packages/dsh-lfaa 的一个可安装插件，发行清单移除私有工作区依赖。仓库根是该产物的安装入口：本地安装前需要先构建，Git 安装会在 prepare 阶段构建；源码包目录仍仅用于开发。
+源码目录、manifest 名称统一 dsh- 前缀，跨包使用公开包名导入。根 scripts 编排构建，tests 存长期回归；私有实现内联到 dist/packages/dsh-lfaa 的一个可安装插件，发行清单移除私有工作区依赖。仓库根是该产物的安装入口：本地安装前需要先构建，GitHub 安装使用已提交的发行目录且不运行构建生命周期脚本；GitHub 推送菜单会在暂存前重建该目录。源码包目录仍仅用于开发。
 
 ## 已确认的定位
 

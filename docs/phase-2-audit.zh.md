@@ -32,7 +32,7 @@ DSH Plugin Manager 接受 registry 包名、Git 仓库地址、tarball 和本地
 | GitHub 仓库 URL | pnpm 能访问 GitHub；仓库根 package.json 声明 dsh.bundle，安装后的包仍须通过 bundle 校验 | 否 |
 | 本地目录 | 使用绝对路径；目录含可读取的 package.json 并声明 dsh.bundle | 否 |
 
-DSH 对 dsh-lfaa 的仓库根路径检查发现：根清单将发行入口指向仓库根 dist/packages/dsh-lfaa，并声明 prepare 构建脚本。因此，从本地源码目录安装前须确保这份产物已构建；Git 安装也须以实际 Git 分支中的清单、构建脚本和 pnpm 生命周期策略为准。如果安装器拦截构建脚本，需要在 DSH 的安装流程中按提示处理。更换 npm registry 只会改变包及依赖的 registry 获取位置，不能修复 GitHub 主机不可达。
+DSH 对 dsh-lfaa 的仓库根路径检查发现：根清单将发行入口指向仓库根 dist/packages/dsh-lfaa。GitHub 安装使用已提交的构建产物，不运行 prepare；GitHub 推送菜单会在暂存前刷新这份产物。本地源码目录安装前仍须先构建。更换 npm registry 只会改变包及依赖的 registry 获取位置，不能修复 GitHub 主机不可达。
 
 用户此前已报告 dsh-lfaa@0.1.0 可通过包名安装；这证明该 registry 安装入口可用。此证据不代表 GitHub 和本地目录入口已分别实测，也不代表 Minecraft 服务功能已存在。
 
@@ -46,7 +46,7 @@ DSH 对 dsh-lfaa 的仓库根路径检查发现：根清单将发行入口指向
 | [dsh-lfaa-workspace](../packages/dsh-lfaa-workspace/README.zh.md) | 注册 DSH 原生菜单、主工作区、会话视图、右侧栏和设置区；显示外观设置及示例预览。 | Minecraft 业务 UI、与真实服务器状态的联动。 |
 | [dsh-lfaa-appearance](../packages/dsh-lfaa-appearance/README.zh.md) | 拥有当前 Profile 级外观配置 Schema，安装可撤销的 DSH 主题令牌投影。 | 通用业务设置、服务器元数据或游戏文件。 |
 
-构建脚本把私有 workspace 包内联到仓库根 dist/packages/dsh-lfaa，并删除发行清单中的私有依赖。根 package.json 的 prepare 会触发该构建。源码包目录与构建产物目录不是同一个安装目标；本地目录入口按仓库根清单安装。
+构建脚本把私有 workspace 包内联到仓库根 dist/packages/dsh-lfaa，并删除发行清单中的私有依赖。源码包目录与构建产物目录不是同一个安装目标；GitHub 与本地目录入口都按仓库根清单安装，GitHub 安装使用仓库中已提交的构建产物。
 
 现有测试为 Node 原生测试，覆盖命名门禁、外观令牌投影与 UI 扩展登记及卸载清理。它们不是 DSH Profile 下的真实安装、激活、Minecraft 启动或进程恢复验收。
 
