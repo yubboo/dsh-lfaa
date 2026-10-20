@@ -15,7 +15,7 @@ function Preview({ t }) {
 
 export function AppearanceControls(props) {
   const { t } = props;
-  const snapshot = props.usePluginConfig();
+  const snapshot = props.usePluginConfig(snapshot => snapshot);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
   if (snapshot.status !== 'ready' || !snapshot.value) return <div className="lfaa-empty" role="status">{t(snapshot.status === 'loading' ? 'loading' : 'unavailable')}</div>;
@@ -60,7 +60,7 @@ export function Workspace(props) {
 
 function WorkspaceContent(props) {
   const { t } = props;
-  const config = props.usePluginConfig().value;
+  const config = props.usePluginConfig(snapshot => snapshot).value;
   const sessionList = props.useSessions(state => state);
   const writingAccount = useSyncExternalStore(props.subscribeWritingAccount, props.getWritingAccount, props.getWritingAccount);
   const [dialog, setDialog] = useState(false);
@@ -216,7 +216,7 @@ export function SettingsSection(props) {
 
 export function Inspector(props) {
   const { t } = props;
-  const config = props.usePluginConfig().value;
+  const config = props.usePluginConfig(snapshot => snapshot).value;
   return <section className="lfaa-inspector"><div className="lfaa-mark"><PluginIcon size={22}/></div><h2>{t('auxiliary')}</h2><p>{t('auxiliaryDescription')}</p>{config && <dl>{[['currentPreset', config.preset], ['currentDensity', config.density], ['currentMotion', config.motion]].map(([label, value]) => <div key={label}><dt>{t(label)}</dt><dd>{t(value)}</dd></div>)}</dl>}<button className="lfaa-secondary-button" onClick={props.openWorkspace}>{t('configure')}</button><details className="lfaa-session-meta"><summary>{t('sessionId')}</summary><code>{props.sessionId}</code></details></section>;
 }
 

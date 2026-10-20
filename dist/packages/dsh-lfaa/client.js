@@ -656,7 +656,7 @@ function Preview({ t }) {
 }
 function AppearanceControls(props) {
   const { t } = props;
-  const snapshot = props.usePluginConfig();
+  const snapshot = props.usePluginConfig((snapshot2) => snapshot2);
   const [pending, setPending] = (0, import_react2.useState)(false);
   const [error, setError] = (0, import_react2.useState)("");
   if (snapshot.status !== "ready" || !snapshot.value) return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "lfaa-empty", role: "status", children: t(snapshot.status === "loading" ? "loading" : "unavailable") });
@@ -732,7 +732,7 @@ function Workspace(props) {
 }
 function WorkspaceContent(props) {
   const { t } = props;
-  const config = props.usePluginConfig().value;
+  const config = props.usePluginConfig((snapshot) => snapshot).value;
   const sessionList = props.useSessions((state) => state);
   const writingAccount = (0, import_react2.useSyncExternalStore)(props.subscribeWritingAccount, props.getWritingAccount, props.getWritingAccount);
   const [dialog, setDialog] = (0, import_react2.useState)(false);
@@ -1025,7 +1025,7 @@ function SettingsSection(props) {
 }
 function Inspector(props) {
   const { t } = props;
-  const config = props.usePluginConfig().value;
+  const config = props.usePluginConfig((snapshot) => snapshot).value;
   return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "lfaa-inspector", children: [
     /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "lfaa-mark", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(PluginIcon, { size: 22 }) }),
     /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { children: t("auxiliary") }),
