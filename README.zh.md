@@ -13,6 +13,7 @@ packages/
   dsh-lfaa/              插件装配与发行清单
   dsh-lfaa-workspace/    左侧菜单、中间工作区/会话Tab、右侧面板、设置中心
   dsh-lfaa-appearance/   外观配置与可撤销主题/动效投影
+  dsh-lfaa-minecraft/   Host 侧 Paper/Fabric 实例、生命周期与 Modrinth Fabric 模组
 scripts/                 构建与结构检查
 tests/                   定向回归
 docs/                    中英文架构、扩展合同与验证
@@ -31,22 +32,22 @@ dist/                    仅生成产物，受忽略
 | 右侧菜单 | 注册自己的 tab 类型及面板，关联所属 DSH Session，显示当前偏好与辅助入口。 |
 | 设置中心 | 注册 dsh-lfaa 设置分区，和工作页共享同一 ConfigForm。 |
 
-这些是插件的原生接入基础，不代表完整业务已经完成。当前没有定义或加入游戏、写作等其他业务。接口与状态见[架构](docs/architecture.zh.md)和[扩展协议](docs/extension-points.zh.md)，实际检查见[验证记录](docs/validation.zh.md)。
+Minecraft 当前实现 Paper 与 Fabric Host 服务和 Agent 工具，并在会话工作区加入操作面板：可请求查询发行版/版本、创建安装、检查状态、启动/停止、读写配置、浏览/读取文件、控制台命令以及备份/恢复。Paper 版本来自 PaperMC；Fabric 版本、稳定 Loader/Installer 与服务端启动 JAR 来自 Fabric Meta。面板把操作明确提交到当前 DSH 会话；Java 检测与必要时官方 Temurin 安装由 Agent 按工具结果决定，写入、下载和进程操作仍受 DSH 审批约束。EULA 必须由用户主动勾选确认。Fabric 还可按 Minecraft 版本搜索 Modrinth 模组，并在服务端停止时安装选中模组及其必需依赖；模组文件按 Modrinth SHA-512 校验。模组整合包、Forge、NeoForge 和真实 DSH Profile 下的端到端验收尚未完成。Fabric 服务端文件由官方 HTTPS 接口生成；该接口未提供与 Paper 相同的 SHA-256 元数据，因此本地记录下载后的散列并检查 JAR 格式，但不能称为发布方校验和验证。
 
 ## 开发
 
 Node.js 版本由 package.json 声明。安装开发依赖时不要自动装入第二份宿主 peer：
 
 ```powershell
-npm install --legacy-peer-deps --ignore-scripts
-npm run build
-npm test
-npm run check
+pnpm install
+pnpm run build
+pnpm test
+pnpm run check
 ```
 
-构建只输出根 dist/packages/dsh-lfaa；Host 与 Browser 入口分离，浏览器通过 DSH 的 ModuleLoader 登记并使用宿主共享 React/原语。发行清单移除已内联的私有包依赖，白名单排除参考源码、测试环境和真实数据。当前 private，不发布 npm。
+仓库根目录现在也是 DSH 安装入口：根清单指向 dist/packages/dsh-lfaa，Git 安装时由 prepare 自动构建该产物。在 DSH「添加插件」中输入 `https://github.com/yubboo/dsh-lfaa.git` 可从 Git 安装；本地安装前先在仓库根运行 `pnpm run build`，再输入仓库根目录。构建只输出根 dist/packages/dsh-lfaa；Host 与 Browser 入口分离，浏览器通过 DSH 的 ModuleLoader 登记并使用宿主共享 React/原语。发行清单移除已内联的私有包依赖，白名单排除参考源码、测试环境和真实数据。包名 `dsh-lfaa` 需要先将构建产物发布到 npm 才能安装。Windows 下可在仓库根双击 `publish-npm.bat` 打开菜单：菜单 6 安全推送到 GitHub `main`，菜单 7 检查、构建、预览并在确认后发布 npm；菜单 1–5 提供构建、登录和版本查询。中文菜单由 `scripts/publish-menu.ps1` 显示，`.bat` 保持纯 ASCII，避免 CMD 把 UTF-8 字符误当成命令。脚本不会自动递增版本。
 
-安装到一个明确的 DSH Profile 使用官方 `dsh plugin --profile <name> add <本项目的dist/packages/dsh-lfaa目录>`，不能安装工作区根或未构建源码包。安装、启用、停用及宿主兼容的真实验证状态以验证记录为准，不使用版本豁免冒充兼容。
+安装到一个明确的 DSH Profile 可使用官方 `dsh plugin --profile <name> add <仓库根目录或dist/packages/dsh-lfaa目录>`。本地仓库根必须先构建；GitHub 根地址会自动构建。安装、启用、停用及宿主兼容的真实验证状态以验证记录为准，不使用版本豁免冒充兼容。
 
 ## 设置
 

@@ -1,10 +1,24 @@
 {
   "name": "dsh-lfaa-workspace",
-  "version": "0.1.0-dev.1",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "description": "Native DSH navigation, workspace, session view, inspector and settings UI",
-  "exports": { ".": "./src/index.jsx" },
-  "dependencies": { "dsh-lfaa-appearance": "0.1.0-dev.1" },
-  "peerDependencies": { "react": "^18.3.1", "@deepseek-ai/dsh-client-ui-primitives": "0.2.1-alpha.3" }
+  "exports": {
+    ".": "./src/index.jsx"
+  },
+  "dependencies": {
+    "dsh-lfaa-appearance": "0.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "@deepseek-ai/dsh-client-ui-primitives": "0.2.1-alpha.3",
+    "@deepseek-ai/dsh-client-ui-session": "0.2.1-alpha.3"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": ["@deepseek-ai/dsh-client-ui-session"]
+    }
+  }
 }

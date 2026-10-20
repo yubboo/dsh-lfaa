@@ -55,3 +55,22 @@
 @container (max-width: 780px) { .lfaa-work-grid { grid-template-columns: minmax(0,1fr); gap: 28px; }.lfaa-preview-column { display: grid; grid-template-columns: minmax(180px,.7fr) minmax(0,1fr); column-gap: 22px; align-items: start; }.lfaa-preview-column .lfaa-preview { grid-row: span 2; }.lfaa-preview-column h3 { margin-top: 16px; }.lfaa-topbar { padding-inline: 20px; }.lfaa-page { padding-inline: 26px; } }
 @container (max-width: 460px) { .lfaa-topbar { padding-inline: 14px; gap: 8px; }.lfaa-brand { gap: 7px; }.lfaa-brand > span:last-child, .lfaa-separator { display: none; }.lfaa-page { padding: 28px 18px 20px; }.lfaa-preset-grid { grid-template-columns: 1fr; }.lfaa-preset { display: grid; grid-template-columns: 75px minmax(0,1fr); column-gap: 12px; }.lfaa-style-swatch { grid-row: span 2; height: 60px; }.lfaa-preset > span:last-child { font-size: .8em; }.lfaa-preview-column { display: block; }.lfaa-settings-section .lfaa-preset-grid { grid-template-columns: 1fr; } }
 @media (max-height: 560px) { .lfaa-page { padding-top: 24px; }.lfaa-intro { margin-bottom: 24px; }.lfaa-dialog { max-height: 88dvh; } }
+.lfaa-minecraft { padding: 22px; margin: 0 0 34px; border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-panel); background: var(--dsw-alias-bg-layer-1); }
+.lfaa-minecraft .lfaa-section-heading { margin-bottom: 18px; }
+.lfaa-minecraft .lfaa-section-heading h2 { margin: 6px 0 0; }
+.lfaa-minecraft-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; align-items: end; }
+.lfaa-minecraft-grid > label, .lfaa-minecraft-options label { display: flex; flex-direction: column; gap: 7px; min-width: 0; color: var(--dsw-alias-label-secondary); font-size: .82em; }
+.lfaa-minecraft-grid input, .lfaa-minecraft-options input { width: 100%; min-width: 0; min-height: 38px; padding: 8px 10px; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-base); border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-sm); font: inherit; }
+.lfaa-minecraft-grid select { width: 100%; min-width: 0; min-height: 38px; padding: 8px 10px; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-base); border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-sm); font: inherit; }
+.lfaa-minecraft-grid input:focus-visible, .lfaa-minecraft-options input:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+.lfaa-minecraft-options { grid-column: 1/-1; padding-top: 5px; color: var(--dsw-alias-label-secondary); font-size: .85em; }
+.lfaa-minecraft-options summary { width: fit-content; cursor: pointer; }
+.lfaa-minecraft-options > div { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; padding: 14px 0 4px; }
+.lfaa-minecraft-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+.lfaa-minecraft-actions button:disabled, .lfaa-minecraft > button:disabled { opacity: .5; cursor: not-allowed; }
+.lfaa-minecraft-eula { display: flex; gap: 9px; align-items: flex-start; margin: 18px 0 10px; color: var(--dsw-alias-label-secondary); font-size: .82em; line-height: 1.5; }
+.lfaa-minecraft-eula input { margin: 2px 0 0; accent-color: var(--dsw-alias-brand-primary); flex: none; }
+.lfaa-minecraft-eula a { color: var(--dsw-alias-brand-primary); }
+.lfaa-success { color: var(--dsw-alias-state-success-primary); font-size: .85em; }
+.lfaa-minecraft-more { margin-top: 16px; }.lfaa-minecraft-more-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); align-items: end; gap: 10px; padding-top: 14px; }.lfaa-minecraft-more-grid label { display: flex; flex-direction: column; gap: 7px; color: var(--dsw-alias-label-secondary); font-size: .8em; }.lfaa-minecraft-more-grid input, .lfaa-minecraft-more-grid textarea { width: 100%; min-width: 0; min-height: 36px; padding: 8px 10px; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-base); border: 1px solid var(--dsw-alias-border-l1); border-radius: var(--dsw-radius-sm); font: inherit; resize: vertical; }.lfaa-minecraft-more-grid .lfaa-minecraft-wide { grid-column: span 2; }
+@container (max-width: 700px) { .lfaa-minecraft-grid { grid-template-columns: 1fr; }.lfaa-minecraft-options { grid-column: 1; }.lfaa-minecraft-options > div, .lfaa-minecraft-more-grid { grid-template-columns: 1fr; }.lfaa-minecraft-more-grid .lfaa-minecraft-wide { grid-column: auto; }.lfaa-minecraft { padding: 16px; } }

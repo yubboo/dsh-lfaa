@@ -7,10 +7,11 @@
 | 包 | 唯一职责 | 运行位置与依赖 |
 |---|---|---|
 | dsh-lfaa | 对外清单、Bundle、Host 装配与配置导出 | Host；构建内联实现包，不复制业务规则。 |
-| dsh-lfaa-workspace | 左侧导航、中间主面板/会话Tab、右侧辅助栏、设置页、文案与局部样式 | Browser；依赖宿主 Slots/Locale/Layout/ConfigForms/Sidebar、共享 React/原语与 appearance。 |
+| dsh-lfaa-workspace | 左侧导航、可选择 DSH 会话的中间主面板、会话Tab、Minecraft 操作、右侧辅助栏、设置页、文案与局部样式 | Browser；依赖宿主 Slots/Locale/Layout/ConfigForms/Sidebar/Session hooks、共享 React/原语与 appearance。 |
 | dsh-lfaa-appearance | 唯一配置 schema 与可撤销的主题/动效投影 | Host schema 与隔离的浏览器投影；不拥有导航、AI 或数据库。 |
+| dsh-lfaa-minecraft | Paper/Fabric 动态目录、Fabric 模组发现、实例元数据、校验安装、Java 运行时与服务端进程生命周期 | Host；使用 `ctx.fs`、`ctx.subprocess` 与 `minecraft_server` Agent 工具。工作区通过选定的 DSH 会话提交请求，不另建 Remote 执行通道。 |
 
-源码目录、manifest 名称统一 dsh- 前缀，跨包使用公开包名导入。根 scripts 编排构建，tests 存长期回归；私有实现内联到 dist/packages/dsh-lfaa 的一个可安装插件，发行清单移除私有工作区依赖。工作区根和源码包目录不能当作安装产物。
+源码目录、manifest 名称统一 dsh- 前缀，跨包使用公开包名导入。根 scripts 编排构建，tests 存长期回归；私有实现内联到 dist/packages/dsh-lfaa 的一个可安装插件，发行清单移除私有工作区依赖。仓库根是该产物的安装入口：本地安装前需要先构建，Git 安装会在 prepare 阶段构建；源码包目录仍仅用于开发。
 
 ## 已确认的定位
 
@@ -23,7 +24,7 @@ DSH 统一掌管全部 AI、模型、Agent/子 Agent、工具调度、会话和 
 | 用户区域 | 真实扩展点 | 当前接入与边界 |
 |---|---|---|
 | 左侧菜单 | `sidebar.panellist`，id=dsh-lfaa；`layout.selectPanel()` | 自己的业务入口，保留宿主导航。 |
-| 中间工作区 | keyed `main`，key=dsh-lfaa | 业务工作页，与当前已选 DSH Session 分开；返回会话调用宿主服务，不创建第二会话。 |
+| 中间工作区 | keyed `main`，key=dsh-lfaa | 全局业务工作页通过 DSH 公开会话列表让用户选择 Agent 操作目标；返回会话不创建第二会话。 |
 | 中间会话/轨迹 Tab | list `conversation.view`，id=dsh-lfaa | 在原会话/轨迹旁增加 Session-bound 工作区，Session ID 来自框架标准 props。不替换 chat/trajectory，不伪造活动或重放消息。轨迹是否显示仍受宿主设置控制，插件不擅自打开开发者功能。 |
 | 右侧菜单 | `sidebarRightTabs` 类型登记 + keyed `sidebar.right.pane.tab` / `.title`；`sidebarRight.openTab()` | 内容属于宿主对应 Session；当前只读显示真实偏好并链接工作页。需要当前会话已在屏幕上，不能把全局面板等同于右栏会话。 |
 | 设置中心 | list `settings.section` + `ConfigForms` | 工作页、Session 工作区、右栏和设置分区共享 Host schema 接受后的同一配置，不另建 LocalStorage 镜像。 |
@@ -52,4 +53,4 @@ Config 定义于 packages/dsh-lfaa-appearance/src/config.mjs，由 dsh-lfaa Host
 
 候选 peer 范围目前限定 alpha.3；真实 Loader、浏览器、设置往返、卸载恢复的结果见验证记录，未测试项不能记为通过。升级先对账公开导出、Bundle/Client 模块协议、Slots/Theme/ConfigForms 和当前 Session 生命周期，再跑直接回归及实页测试；不使用版本豁免或静默回退代替适配。
 
-源码核查依据是上游 packages/client/{ui-layout,ui-conversation,ui-sidebar-right,ui-settings,ui-theme,ui-slots,ui-primitives} 的公开服务/插槽合同及 docs/user/develop/basic/publish.zh.md。未来业务按需接入 Tools、Remote、Jobs、Skills/Preset 和文件/交付物，不能为扩展点齐全而先创建无消费者功能。
+源码核查依据是上游 packages/client/{ui-layout,ui-conversation,ui-sidebar-right,ui-settings,ui-theme,ui-slots,ui-primitives,ui-session} 的公开服务/插槽合同及 docs/user/develop/basic/publish.zh.md。Minecraft 阶段三进度和限制见[阶段记录](phase-3-minecraft.zh.md)：Paper/Fabric Host 工具与工作区入口已接入；Forge/NeoForge/Quilt、模组整合包、代理服和真实开服验收尚未完成。

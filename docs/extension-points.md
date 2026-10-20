@@ -5,10 +5,11 @@ English | [中文](extension-points.zh.md)
 | Surface | DSH interface | Plugin obligation |
 |---|---|---|
 | Left navigation | sidebar.panellist + layout.selectPanel | Keep host navigation; the plugin id selects its own registered main panel. |
-| Central workspace | keyed main | Global business panel; do not assume a Session is bound. |
+| Central workspace | keyed main + global `useSessions` hook | The global panel lists DSH conversations and requires a selected target for Agent operations. |
 | Conversation/Trajectory tabs | list conversation.view | Add dsh-lfaa beside native tabs. Session identity comes from framework props; preserve native history, view selection and developer-mode policy. |
 | Right pane | sidebarRightTabs + sidebar.right.pane.tab/title + openTab | Register type and body/title together; the current on-screen Session owns the pane. Global panels are not Session surfaces. |
 | Settings | settings.section + ConfigForms | Share the same accepted schema and revision-fenced persistence with the workspace. Handle unavailable/read-only/refused writes truthfully. |
+| Minecraft Host domain | `ctx.lfaaMinecraft`, provided by dsh-lfaa-minecraft | Owns Paper/Fabric version and build discovery, Java inspection/install, instances, EULA, lifecycle, bounded files/config, console, backups, and Fabric mods. The workspace submits requests to `minecraft_server` through the selected DSH conversation. |
 
 All contributions dispose. Use slots.inject to wait for declarations, and retain original props/children/store/scope contracts when shading native slots. Lower numeric shadow priority wins; identical priority collisions are errors. Do not target private DOM or hashed classes.
 

@@ -5,10 +5,11 @@
 | 区域 | DSH 接口 | 插件义务 |
 |---|---|---|
 | 左侧菜单 | sidebar.panellist + layout.selectPanel | 保留宿主导航，插件 id 选择自己的 main 面板。 |
-| 中间工作区 | keyed main | 全局业务面板，不假定已经绑定 Session。 |
+| 中间工作区 | keyed main + 全局 `useSessions` hook | 全局面板列出 DSH 会话；Agent 操作前必须选择目标会话。 |
 | 会话/轨迹 Tab | list conversation.view | 增加 dsh-lfaa Tab，身份来自框架 props；保留原历史、视图选择与轨迹的开发者设置。 |
 | 右侧菜单 | sidebarRightTabs + sidebar.right.pane.tab/title + openTab | 类型、正文和标题配套登记；属于当前上屏 Session，全局面板不等同会话面板。 |
 | 设置中心 | settings.section + ConfigForms | 工作区消费同一校验后的配置和带 revision 的保存链；不可用、只读或写入拒绝如实显示。 |
+| Minecraft Host 领域 | `ctx.lfaaMinecraft`，由 dsh-lfaa-minecraft 提供 | 提供 Paper/Fabric 版本与构建发现、Java 检查/安装、实例、EULA、开停服、受限文件/配置、控制台、备份及 Fabric 模组；工作区将请求发送到选定 DSH 会话中的 `minecraft_server` Agent 工具。 |
 
 登记均可撤销，slots.inject 等待插槽声明；覆盖原组件时保持 props/children/store/scope 合同，shadow 优先级数值低者呈现，同优先级冲突报错。不扫描私有 DOM 或匹配散列类名。
 

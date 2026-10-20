@@ -1,0 +1,9 @@
+packages:
+  - packages/dsh-lfaa-appearance
+  - packages/dsh-lfaa-workspace
+  - packages/dsh-lfaa-minecraft
+
+allowBuilds:
+  esbuild: true
+
+linkWorkspacePackages: true

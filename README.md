@@ -13,6 +13,7 @@ packages/
   dsh-lfaa/              Plugin composition and distribution manifest
   dsh-lfaa-workspace/    Left menu, main workspace, Session tab, right pane, Settings
   dsh-lfaa-appearance/   Appearance schema and reversible theme/motion projection
+  dsh-lfaa-minecraft/    Host-side Paper/Fabric instances, lifecycle, and Modrinth Fabric mods
 scripts/                 Build and repository checks
 tests/                   Focused regression tests
 docs/                    Architecture, extension contracts and validation
@@ -24,12 +25,12 @@ Package directories and manifest names use the `dsh-` prefix. Private implementa
 ## Develop
 
 ```powershell
-npm install --legacy-peer-deps --ignore-scripts
-npm run build
-npm test
-npm run check
+pnpm install
+pnpm run build
+pnpm test
+pnpm run check
 ```
 
-The installable output is `dist/packages/dsh-lfaa/`. The build excludes private workspace dependencies, development source, test fixtures and user data. Install that output through DSH's official profile plugin command, not the repository root. The package is currently private and is not published by this workflow.
+The DSH repository root is also an install facade: its manifest points to `dist/packages/dsh-lfaa/`, and its Git `prepare` lifecycle builds that package. In DSH's Add Plugin dialog, enter the repository URL `https://github.com/yubboo/dsh-lfaa.git`; for a local install, run `pnpm run build` first and enter this repository's root directory. The build excludes private workspace dependencies, development source, test fixtures and user data. The package name `dsh-lfaa` works after the built distribution is published to npm. On Windows, run `publish-npm.bat` from the repository root: menu 6 safely pushes to GitHub `main`, menu 7 builds, previews and publishes to the official npm registry after confirmation, and menus 1–5 provide package checks. The menu implementation is `scripts/publish-menu.ps1`; the batch launcher stays ASCII-only so CMD does not misparse its UTF-8 menu text. The script does not change the package version.
 
-The current implementation contributes native workspace surfaces and the first interface-experience module. Other business capabilities are not defined or claimed. Read the [architecture](docs/architecture.md), [extension points](docs/extension-points.md), [development standard](DEVELOPMENT.md), [agent rules](AGENTS.md) and [actual validation](docs/validation.md).
+Minecraft currently supports Paper and Fabric Host services and Agent operations, with a session workspace panel for distribution/version discovery, server create/install, status, start/stop, configuration, file inspection, console commands, backup/restore, and mod search/install. Fabric mods are searched through Modrinth by Minecraft version and installed only into a stopped Fabric instance; required dependencies are resolved recursively and downloaded files are checked against Modrinth SHA-512 metadata. Modpacks, Forge, NeoForge, and end-to-end acceptance in a real DSH Profile remain unfinished. The panel submits explicit requests into the active DSH conversation; the Agent inspects Java and may install an official Temurin runtime when needed, while downloads, writes, and process actions remain subject to DSH approval. The user must explicitly confirm Minecraft EULA acceptance. Paper downloads carry publisher SHA-256 metadata. Fabric's official HTTPS bootstrap endpoint does not publish the same checksum metadata, so the plugin records the downloaded file's local hash and validates its JAR format without claiming publisher-checksum verification.

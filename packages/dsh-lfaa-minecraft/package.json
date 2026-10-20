@@ -1,0 +1,16 @@
+{
+  "name": "dsh-lfaa-minecraft",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Agent-orchestrated Paper and Fabric server lifecycle, Java runtime and Fabric mod management",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "0.2.1-alpha.3",
+    "@deepseek-ai/dsh-sandbox": "0.2.1-alpha.3",
+    "@deepseek-ai/dsh-sandbox-policy": "0.2.1-alpha.3",
+    "@deepseek-ai/dsh-user-approval": "0.2.1-alpha.3"
+  }
+}

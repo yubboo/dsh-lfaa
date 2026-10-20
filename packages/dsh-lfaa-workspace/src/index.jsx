@@ -4,7 +4,7 @@ import { zh, en } from './locales.mjs';
 import styles from './styles.css';
 
 export const name = 'dsh-lfaa';
-export const inject = ['slots', 'locale', 'theme', 'configForms', 'layout', 'sidebarRightTabs', 'sidebarRight'];
+export const inject = ['slots', 'locale', 'theme', 'configForms', 'layout', 'sidebarRightTabs', 'sidebarRight', 'sessions'];
 
 /** Native composition root: each contribution retains its DSH scope and owner. */
 export function apply(ctx) {
@@ -12,9 +12,24 @@ export function apply(ctx) {
   ctx.effect(() => ctx.locale.register(name, { zh, en }));
   const t = ctx.locale.bind(name);
   const form = ctx.configForms.get(name);
+  const submitMinecraftPrompt = async (sessionId, prompt) => {
+    if (!sessionId) throw new Error('请先在 DSH 会话中打开 dsh-lfaa 工作区。');
+    await ctx.sessions.using(sessionId, { source: 'dsh-lfaa-minecraft-ui' }, async reference => {
+      const session = reference.binding.session;
+      const submission = session.beginSubmission({ mode: 'queue', text: prompt, attachments: [] });
+      try {
+        const result = await session.prompt([{ type: 'text', text: prompt }], 'queue', undefined, submission.requestId);
+        if (!result.ok) throw new Error(result.error.message);
+      } catch (error) {
+        submission.abandon();
+        throw error;
+      }
+    });
+  };
   const face = () => ({
     hooks: { pluginConfig: form },
     setConfig: (field, value) => form.set(field, value),
+    submitMinecraftPrompt,
     openWorkspace: () => ctx.layout.selectPanel(name),
     returnToChat: () => ctx.layout.selectPanel(null),
     openInspector: () => ctx.sidebarRight.openTab(name),
